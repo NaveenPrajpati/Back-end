@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import session from "express-session";
 import passport from "passport";
+import cors from 'cors'
 import { connectDB } from "./config/db.js";
 
 // configuration
@@ -12,7 +13,7 @@ connectDB();
 
 const app = express();
 app.use(express.json());
-
+app.use(cors())
 app.use(
   session({ secret: "kaalastar", resave: false, saveUninitialized: true })
 );

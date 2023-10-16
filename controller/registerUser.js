@@ -48,6 +48,7 @@ export const login = async (req, res, next) => {
     // Extract user input data (email and password) from the request body
     const { email, password } = req.body;
 
+
     // Find a user in the database with the provided email
     const user = await User.findOne({ email });
 
@@ -109,6 +110,7 @@ export const deleteUser = async (req, res, next) => {
     // Extract the user ID and password from the request.
     const userId = req.params.userId;
     const { password } = req.body;
+    console.log('id-',userId)
 
     // Find the user in the database based on the user ID.
     const user = await User.findById(userId);
