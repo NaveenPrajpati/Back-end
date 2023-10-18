@@ -6,6 +6,11 @@ const uploadResumeSchema = new mongoose.Schema(
       data: Buffer,
       contentType: String,
     },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    }
   },
   {
     timestamps: true,

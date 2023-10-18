@@ -29,6 +29,10 @@ app.use("/user", userRoutes);
 import categoryRoute from "./routes/categoryRoutes.js";
 app.use("/api/profile", categoryRoute);
 
+app.get("/", function(req, res){
+  res.send("api is working properly")
+})
+
 app.listen(process.env.PORT, () => {
   console.log(`Server Running on port ${process.env.PORT}`);
 });

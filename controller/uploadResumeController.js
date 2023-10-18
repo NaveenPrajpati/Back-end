@@ -1,10 +1,25 @@
 import uploadResumeModel from "../model/uploadResumeModel.js";
+import jwt from "jsonwebtoken"; // Import JWT library
+import User from "../model/userSchema.js";
 
 import fs from "fs"; // Make sure to import the 'fs' module.
 
 export const uploadResumeController = async (req, res) => {
   try {
     const { resume } = req.files;
+    const token = req.headers.token;
+    if(!token){
+      return res.status(400).send({ message: 'token is missing' }); 
+    }else{
+      var verification=await jwt.verify(token,process.env.JWT_SECRET_KEY);
+      console.log(verification);
+      if(verification){
+          const userData=await User.findOne({_id:verification.userId})
+          if(!userData){
+            res.status(404).send({ message: 'user not found' });
+          }
+      }
+    }
 
     // Check if 'resume' exists and its size is less than 5MB (5 * 1024 * 1024 bytes).
     if (!resume || resume.size > 5 * 1024 * 1024) {
@@ -24,7 +39,7 @@ export const uploadResumeController = async (req, res) => {
     };
 
     // Use 'uploadResumeModel' to save the resume in the database.
-    await uploadResumeModel.create(resumeDetails);
+    await uploadResumeModel.create({resume:resumeDetails,user:verification.userId});
 
     // Send a success response.
     res

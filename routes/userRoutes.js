@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post("/register", register);
 
-router.get("/login", login);
+router.post("/login", login);
 
 // Define a route to handle user logout. You can customize the route path as needed.
 router.post("/logout", logout);
