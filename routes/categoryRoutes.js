@@ -9,7 +9,12 @@ import {
   addNewProjectController,
   getAllProjectsController,
 } from "../controller/categroyController.js";
-import { createContactPeopleController } from "../controller/createContactPeopleController.js";
+import {
+  createContactPeopleController,
+  deleteContactPeopleController,
+  fetchContactPeopleController,
+  updateContactPeopleController,
+} from "../controller/createContactPeopleController.js";
 import { uploadResumeController } from "../controller/uploadResumeController.js";
 import { uploadPaper } from "../controller/uploadPaperController.js";
 // Create an instance of an Express Router to define our API routes.
@@ -24,10 +29,19 @@ router.post("/create-new-project", formidable(), addNewProjectController);
 // Define a route to handle contacting people for a project and using 'express-formidable' middleware
 // to parse the form data from the request.
 router.post(
-  "/contact-people-for-project",
+  "/create-contact-people",
   formidable(),
   createContactPeopleController
 );
+
+// Fetch all contact people and projects
+router.get("/contact-people", fetchContactPeopleController);
+
+// Update a contact person or project by ID
+router.put("/contact-people/:id", updateContactPeopleController);
+
+// Delete a contact person or project by ID
+router.delete("/contact-people/:id", deleteContactPeopleController);
 
 router.post("/upload-resume", formidable(), uploadResumeController);
 

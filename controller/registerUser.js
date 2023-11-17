@@ -36,7 +36,7 @@ export const register = async (req, res, next) => {
     delete user.password;
 
     // Send a success response with the newly created user
-    return res.json({ status: true, user });
+    return res.json({msg: "your registration is completed successfully", status: true});
   } catch (ex) {
     // If an error occurs during the registration process, pass it to the error handler
     next(ex);
@@ -67,7 +67,7 @@ export const login = async (req, res, next) => {
       });
 
     // If both email and password are correct, generate a JWT token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
+    const token = jwt.sign({ userId: user._id, username: user.username, email: user.email, collegeName:user.collegeName  }, process.env.JWT_SECRET_KEY, {
       expiresIn: "1h", // Token expires in 1 hour (you can adjust this)
     });
 
@@ -75,7 +75,7 @@ export const login = async (req, res, next) => {
     delete user.password;
 
     // Send a success response with the token and authenticated user
-    return res.json({ status: true, user, token });
+    return res.json({ msg:"logged in successfully", status: true, token:token });
   } catch (ex) {
     // If an error occurs during the login process, pass it to the error handler
     next(ex);
